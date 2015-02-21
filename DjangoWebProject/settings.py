@@ -20,11 +20,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': path.join(PROJECT_ROOT, 'db.sqlite3'),
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'CsMtlDB',
+        'USER': 'b3a5fa3ab4fbbe',
+        'PASSWORD': '45e96810',
+        'HOST': 'us-cdbr-azure-east-b.cloudapp.net',
         'PORT': '',
     }
 }
@@ -38,11 +38,11 @@ LOGIN_URL = '/login'
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Montreal'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-ca'
 
 SITE_ID = 1
 
