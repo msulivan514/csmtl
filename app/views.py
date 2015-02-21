@@ -58,6 +58,23 @@ def filters(request):
     
     return JsonResponse(filters)
 
+def search(request, fieldID, gradeID, provID, ageID, genderID):
+    """Crunches the whole data with inputs from the user and return json as a result"""
+    assert isinstance(request, HttpRequest)
+    
+    # add code to compute fitness functions f1 and f2
+    # given inputs in parameters
+
+    results = dict()
+    results['fieldID'] = fieldID
+    results['gradeID'] = gradeID
+    results['provID'] = provID
+    results['ageID'] = ageID
+    results['genderID'] = genderID
+
+    return JsonResponse(results)
+
+
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)

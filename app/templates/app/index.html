@@ -50,7 +50,9 @@
                 <hr />
                 <div class="form-group">
                     <div class="col-sm-12 text-center">
-                        <button type="submit" class="btn btn-primary">Go Score That</button>
+                        <button type="submit" class="btn btn-primary" data-loading-text="Fetching the results...">
+                            Go Score That
+                        </button>
                     </div>
                 </div>
             </form>
@@ -59,11 +61,20 @@
     </div>
 </section>
 
+<br />
+
+<section>
+     <div id="results"></div>
+</section>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script>
+
+    // do things when document is ready
     $(function () {
         
+        // get search filters from django and populate form on the page
         $.getJSON("/searchFilers", function (data) {
 
             var fields = data.fields;
@@ -100,8 +111,48 @@
                 $("#inputGenders").append(sOption);
             });
 
+            $("input:radio[name=radioGender]").attr("checked", "checked");
+
         });
 
+    });
+
+    // attach event handler to form submission
+    $("form").submit(function (event) {
+
+        // prevent default form submission behaviour
+        event.preventDefault();
+
+        // set loading flag on button
+        var $btn = $("form button").button('loading');
+
+        // send async request to django
+        var url = "/doSearch/" +
+                    $("select#inputField option:selected").val() + "/" +
+                    $("select#inputGrade option:selected").val() + "/" +
+                    $("select#inputProvince option:selected").val() + "/" +
+                    $("select#inputAgeGroup option:selected").val() + "/" +
+                    $("input:radio[name=radioGender]:checked").val();
+
+                    
+        $.getJSON(url, function (data) {
+
+            var items = [];
+            $.each(data, function(key, value){
+                items.push("<dt>" + key + "</dt><dd>" + value + "</dd>" );
+            });
+
+            $( "<dl/>", {
+                "class": "dl-horizontal",
+                html: items.join("")
+            }).appendTo("#results");
+
+        }).always(function () {
+
+            // release loading flag on button no matter what (success/failure)
+            $btn.button('reset');
+
+        });
     });
 </script>
 
