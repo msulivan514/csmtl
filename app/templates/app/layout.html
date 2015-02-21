@@ -32,7 +32,7 @@
                 <a href="/" class="navbar-brand">#csMTL</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-right">
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'about' %}">About</a></li>
                     <li><a href="{% url 'contact' %}">Contact</a></li>
@@ -44,7 +44,7 @@
     <div class="container body-content">
 {% block content %}{% endblock %}
         <hr/>
-        <footer>
+        <footer class="text-right">
             <p>&copy; {{ year }} - The C0d3 Slingers from Montreal</p>
         </footer>
     </div>

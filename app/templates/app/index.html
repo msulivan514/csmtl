@@ -2,36 +2,107 @@
 
 {% block content %}
 
-<div class="jumbotron">
-    <h1>Django</h1>
-    <p class="lead">Django is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://www.djangoproject.com/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div>
+<header>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1><strong>Welcome to blablabla</strong></h1>
+            <h3>This webapp makes it possible to do ploploploplop...</h3>
+            <h4>Simply make your selection and hit <mark>Go</mark> to get results</h4>
+        </div>
+    </div>
+</header>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            Django gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://www.djangobook.com/en/2.0/index.html">Learn more &raquo;</a></p>
+<br />
+
+<section>
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <div class="well well-lg">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="inputField">Working field</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="inputField"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="inputGrade">Education grade</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="inputGrade"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="inputProvince">Province of residency</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="inputProvince"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="inputAgeGroup">Age group</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="inputAgeGroup"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Gender</label>
+                    <div class="col-sm-8" id="inputGenders"></div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-primary">Go Score That</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
-        <p><a class="btn btn-default" href="https://pypi.python.org/pypi">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Python Tools for Visual Studio</h2>
-        <p>
-            PTVS is a free, open source plugin that turns Visual Studio into a Python IDE 
-            with support for editing, browsing, IntelliSense, Azure remote debugging, 
-            profiling and more.
-        </p>
-        <p><a class="btn btn-default" href="http://pytools.codeplex.com">Learn more &raquo;</a></p>
-    </div>
-</div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script>
+    $(function () {
+        
+        $.getJSON("/searchFilers", function (data) {
+
+            var fields = data.fields;
+            var grades = data.grades;
+            var provinces = data.provinces;
+            var ages = data.ages;
+            var genders = data.sex;
+
+            $.each(fields, function (key, value) {
+                var sOption = "<option value=" + key + ">" + value + "</option>";
+                $("#inputField").append(sOption);
+            });
+
+            $.each(grades, function (key, value) {
+                var sOption = "<option value=" + key + ">" + value + "</option>";
+                $("#inputGrade").append(sOption);
+            });
+
+            $.each(provinces, function (key, value) {
+                var sOption = "<option value=" + key + ">" + value + "</option>";
+                $("#inputProvince").append(sOption);
+            });
+
+            $.each(ages, function (key, value) {
+                var sOption = "<option value=" + key + ">" + value + "</option>";
+                $("#inputAgeGroup").append(sOption);
+            });
+
+            $.each(genders, function (key, value) {
+                var sOption = 
+                            "<label class='radio-inline'>" +
+                                "<input type='radio' name='radioGender' value='" + key + "'>" + value +
+                            "</label>";
+                $("#inputGenders").append(sOption);
+            });
+
+        });
+
+    });
+</script>
 
 {% endblock %}
