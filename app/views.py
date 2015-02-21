@@ -6,7 +6,9 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.template import RequestContext
 from datetime import datetime
+from app.models import AgeGroup, Sex, EducationLevel
 
+#----------------------------------------------------------------
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -20,6 +22,28 @@ def home(request):
         })
     )
 
+#----------------------------------------------------------------
+def _GetEducLevelsAll():
+   ret = dict()
+   for level in EducationLevel.objects.all():
+      ret[level.id] = level.name
+   return ret
+
+#----------------------------------------------------------------
+def _GetSexAll():
+   ret = dict()
+   for sex in Sex.objects.all():
+      ret[sex.id] = sex.name
+   return ret
+
+#----------------------------------------------------------------
+def _GetAgeGroupAll():
+   ret = dict()
+   for ageGroup in AgeGroup.objects.all():
+      ret[ageGroup.id] = ageGroup.name
+   return ret
+
+#----------------------------------------------------------------
 def filters(request):
     """Builds Json file with search filters"""
     assert isinstance(request, HttpRequest)
@@ -31,33 +55,20 @@ def filters(request):
     fields[1] = "field2"
     fields[2] = "field3"
 
-    grades = dict()
-    grades[0] = "grade1"
-    grades[1] = "grade2"
-    grades[2] = "grade3"
-
     provinces = dict()
     provinces[0] = "province1"
     provinces[1] = "province2"
     provinces[2] = "province3"
 
-    ages = dict()
-    ages[0] = "12-17"
-    ages[1] = "18-24"
-    ages[2] = "25-45"
-
-    sex = dict()
-    sex[0] = "male"
-    sex[1] = "female"
-    
     filters["fields"] = fields
-    filters["grades"] = grades
+    filters["grades"] = _GetEducLevelsAll()
     filters["provinces"] = provinces
-    filters["ages"] = ages
-    filters["sex"] = sex
+    filters["ages"] = _GetAgeGroupAll()
+    filters["sex"] = _GetSexAll()
     
     return JsonResponse(filters)
 
+#----------------------------------------------------------------
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
@@ -72,6 +83,7 @@ def contact(request):
         })
     )
 
+#----------------------------------------------------------------
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
