@@ -16,16 +16,16 @@ class Command(BaseCommand):
       datareader = csv.reader(csvFile, delimiter=',')
 
       # Sex data
-      sexMan = Sex.objects.filter(name = "Man")
+      sexMan = Sex.objects.filter(name = "Male")
       if( not sexMan ):
-         sexMan = Sex.objects.create(name = "Man")
+         sexMan = Sex.objects.create(name = "Male")
          sexMan.save()
       else:
          sexMan = sexMan[0]
 
-      sexWoman = Sex.objects.filter(name="Woman")
+      sexWoman = Sex.objects.filter(name="Female")
       if( not sexWoman ):
-         sexWoman = Sex.objects.create(name = "Woman")
+         sexWoman = Sex.objects.create(name = "Female")
          sexWoman.save()
       else:
          sexWoman = sexWoman[0]
