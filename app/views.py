@@ -5,23 +5,21 @@ Definition of views.
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.template import RequestContext
+from django.db.models import *
 from datetime import datetime
-from app.models import AgeGroup, Sex, EducationLevel
-from app.models import WorkField, Province, UnemploymentToVacanciesRatio
+from app.models import *
 
 #----------------------------------------------------------------
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
-    return render(
-        request,
+    return render(request,
         'app/index.html',
         context_instance = RequestContext(request,
         {
-            'title':'Home Page',
+            'title':'Home',
             'year':datetime.now().year,
-        })
-    )
+        }))
 
 #----------------------------------------------------------------
 def _GetEducLevelsAll():
@@ -73,115 +71,97 @@ def filters(request):
     return JsonResponse(filters)
 
 #----------------------------------------------------------------
-def search(request, fieldID, gradeID, provID, ageID, genderID):
+def getProvinceChance(fieldID, gradeID, provID, ageID, genderID):
+    """Crunches the whole data with inputs from the user and return dictionary as a result"""
+
+    try:
+        # min/max ratio of unemployment VS vacancies for this field
+        minMaxRatio = UnemploymentToVacanciesRatio.objects.aggregate(Min('value'), Max('value'))
+        minRatio = minMaxRatio["value__min"]
+        maxRatio = minMaxRatio["value__max"]
+        
+        # F1
+        employmentRatio = EmploymentRatio.objects.values_list('value',flat=True).filter(sex__id=genderID).filter(educLevel__id=gradeID).get(ageGroup__id=ageID)
+        F1 = employmentRatio
+
+        # compute F2
+        F2 = 0
+        C1 = 1
+        C2 = 0
+
+        unEmploymentRatios = UnemploymentToVacanciesRatio.objects.filter(workField__id=fieldID, province__id=provID)
+        if(len(unEmploymentRatios) > 0):
+            unEmploymentRatioValue = unEmploymentRatios[0].value;
+        
+            # slope
+            slope = (100 - 5) / (minRatio - maxRatio)
+            offset = 100 - slope*minRatio
+            F2 = (slope * unEmploymentRatioValue) + offset
+            if(F2 < 0.1):
+                return None
+
+            # data quality
+            dataQuality = DataQuality.objects.get(workfield__id=fieldID)
+            dataQualityName = dataQuality.name
+            dataQualityFactors = {
+                'A':0.85,
+                'B':0.73,
+                'C':0.65,
+                'D':0.46,
+                'E':0.38,
+                'F':0.1
+            }
+            dataQualityFactor = dataQualityFactors[dataQualityName];
+
+            # compute C1 and C2
+            C1 = 1 - dataQualityFactor
+            C2 = dataQualityFactor
+
+        # impact results
+        overallChance = C1*F1 + C2*F2
+        
+        return overallChance
+
+    except Exception as e:
+        # general error, no results
+        print e
+        return None
+
+#----------------------------------------------------------------
+def search(request, fieldID, gradeID, ageID, genderID):
     """Crunches the whole data with inputs from the user and return json as a result"""
     assert isinstance(request, HttpRequest)
-    
-    # add code to compute fitness functions f1 and f2
-    # given inputs in parameters
 
-    #results = dict()
-    #results['fieldID'] = fieldID
-    #results['gradeID'] = gradeID
-    #results['provID'] = provID
-    #results['ageID'] = ageID
-    #results['genderID'] = genderID
+    results = dict()
 
-    #return JsonResponse(results)
+    provinces = _GetProvincesAll()
 
-    """the final score is F=aF1+(1-a)F2"""
+    for provId in provinces.keys():
+        chance = getProvinceChance(fieldID, gradeID, provId, ageID, genderID)
+        if(chance == None):
+            continue
+        results[provId] = chance;
 
-    """Calcul du score F1 en %"""
-    #genderID='Female'
-    #ageID='15 to 24 years'
-    #provID='Alberta'
-    #fieldID='Construction'
-    #gradeID='High school graduate'
-    score_1=dict()
-    print('%s, %s, %s,%s,%s',genderID, provID, ageID,fieldID,gradeID)
-    F1=EmploymentRatio.objects.values_list('value',flat=True).filter(sex__id=genderID).filter(educLevel__id=gradeID).get(ageGroup__id=ageID)
-       
-    score_1['success']=F1
-    print('%f',F1)
-
-    """Calcul du score F2 en %"""
-    """unemp est le taux d unemployment"""
-
-    print "workfiel id %s, province id %s" %(fieldID, provID)
-    score_2=dict()
-    try:
-        unemp = UnemploymentToVacanciesRatio.objects.filter( workField__id=fieldID, province__id=provID )
- #       unemp=UnemploymentToVacanciesRatio.objects.values_list('value',flat=True).filter(workField__id=fieldID).get(province__id=provID)
-    except:
-       print "unemp not found"
-       unemp=None
-
-    """gestion exception lorsque pas de data depuis dataset JVS incomplete"""
-    """qualite_2 est la qualite de mesure, sous forme literale"""
-    if (not unemp):
-       cont=dict()
-       print "unemp not found"
-       cont['results']=F1
-       return JsonResponse(cont)
-    else:
-           print('%f',unemp)
-           temp=DataQuality.objects.get(workfield__name=fieldID)
-           qualite_2=temp.name
-    """F2 est la traduction en % de unemp. si unemp = 0, F2=100%, si unemp>=1, F2=0%"""
-    """attention: eliminer data ou unemp n'existe pas  """
-    if(unemp >=0 or unemp <=1):
-          F2=100*(1-unemp)
-          print('%f',F2)
-    else:
-          F2=0
-    """Q2 est la ponderation de Qualite_2, ex: A=1, F=0.1"""
-
-    if (qualite_2=='A'):
-          Q2=1
-    if (qualite_2=='B'):
-          Q2=0.8
-    if (qualite_2=='C'):
-          Q2=0.6
-    if (qualite_2=='D'):
-          Q2=0.4
-    if (qualite_2=='E'):
-          Q2=0.2
-    if (qualite_2=='F'):
-          Q2=0.1
-
-    score_2['success']=F2
-    score_2['qualite']=Q2
-#    return JsonResponse(score_2)
-
-    """Retourne la valeur de F"""
-    a=1-Q2
-    b=Q2
-    print('%f,%f',a,b)
-    results=dict()
     return JsonResponse(results)
 
 #----------------------------------------------------------------
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
-    return render(
-        request,
+    return render(request,
         'app/contact.html',
         context_instance = RequestContext(request,
         {
             'year':datetime.now().year,
-        })
-    )
+        }))
 
 #----------------------------------------------------------------
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
-    return render(
-        request,
+    return render(request,
         'app/about.html',
         context_instance = RequestContext(request,
         {
             'year':datetime.now().year,
-        })
-    )
+        }))

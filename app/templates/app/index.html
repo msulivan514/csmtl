@@ -56,12 +56,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="inputProvince">Province of residency</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control" id="inputProvince"></select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-sm-3 control-label" for="inputAgeGroup">Age group</label>
                                     <div class="col-sm-8">
                                         <select class="form-control" id="inputAgeGroup"></select>
@@ -132,8 +126,7 @@
 
 <script>
 
-    // provinces are global to this page
-    var provinces = undefined;
+    var provinces;
 
     // do things when document is ready
     $(function () {
@@ -155,11 +148,6 @@
             $.each(grades, function (key, value) {
                 var sOption = "<option value=" + key + ">" + value + "</option>";
                 $("#inputGrade").append(sOption);
-            });
-
-            $.each(provinces, function (key, value) {
-                var sOption = "<option value=" + key + ">" + value + "</option>";
-                $("#inputProvince").append(sOption);
             });
 
             $.each(ages, function (key, value) {
@@ -202,14 +190,10 @@
         // set loading flag on button
         var $btn = $("form button").button('loading');
 
-        // get province id
-        var provinceId = $("select#inputProvince option:selected").val();
-
         // send async request to django
         var url = "/doSearch/" +
                     $("select#inputField option:selected").val() + "/" +
                     $("select#inputGrade option:selected").val() + "/" +
-                    provinceId + "/" +
                     $("select#inputAgeGroup option:selected").val() + "/" +
                     $("input:radio[name=radioGender]:checked").val();
 
@@ -218,17 +202,13 @@
 
             var items = [];
             $.each(data, function (key, value) {
-                
-                var sProgressClass = "progress-bar-success";
-                if (key == provinceId) {
-                    sProgressClass = "progress-bar-warning";
-                }
 
+                var chance = Math.round(value);
                 var sItem = "<dt>" + provinces[key] + "</dt>" +
                             "<dd>" +
                                 "<div class='progress'>" +
-                                    "<div class='progress-bar " + sProgressClass + "' role='progressbar' style='width:" + value + "%'>" +
-                                        value + "%" +
+                                    "<div class='progress-bar progress-bar-success' role='progressbar' style='width:" + chance + "%'>" +
+                                        chance + "%" +
                                     "</div>" +
                                 "</div>" +
                             "</dd>";
