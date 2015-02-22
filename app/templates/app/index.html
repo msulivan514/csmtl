@@ -7,81 +7,84 @@
         <div class="col-sm-12 text-center">
             <h1><strong>Welcome to <span style="white-space: nowrap;"><kbd>I On The Job</kbd></span></strong></h1>
             <h3>Build your career in the right Canadian province.</h3>
-            <h4>Simply make your selection and hit <mark>Go</mark> to see your results</h4>
         </div>
     </div>
 </header>
 
-<br />
-
-<div class="container body-content">
-
-    <!-- progress bar to indicate loading of search filters -->
-    <div class="row collapse in" id="progress">
-        <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8">
-            <div class="progress">
-              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                <span class="sr-only">100% Complete</span>
-              </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- the search results panel -->
-    <section class="collapse" id="sectionSearch">
-        <div class="row">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <span class="glyphicon glyphicon-triangle-bottom"></span> 
-                            <a href="#searchBody" data-toggle="collapse">Select your profile</a>
-                        </h3>
-                    </div>
-                    <div class="panel-body collapse in" id="searchBody">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="inputField">Working field</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="inputField"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="inputGrade">Education grade</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="inputGrade"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="inputProvince">Province of residency</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="inputProvince"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="inputAgeGroup">Age group</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="inputAgeGroup"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Gender</label>
-                                <div class="col-sm-8" id="inputGenders"></div>
-                            </div>
-                            <hr />
-                            <div class="form-group">
-                                <div class="col-sm-12 text-center">
-                                    <button type="submit" class="btn btn-primary" data-loading-text="Fetching the results...">
-                                        Go Score That
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+<section style="background-color: lightgrey; margin:0; padding:30px;">
+    <div class="container body-content">
+        <!-- progress bar to indicate loading of search filters -->
+        <div class="row collapse in" id="progress">
+            <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" id="progressLoading" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    <span class="sr-only">100% Complete</span>
+                  </div>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- the search results panel -->
+        <section class="collapse" id="sectionSearch">
+            <div class="row">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span class="glyphicon glyphicon-triangle-bottom"></span> 
+                                <a href="#searchBody" data-toggle="collapse">Select your profile</a>
+                            </h3>
+                        </div>
+                        <div class="panel-body collapse in" id="searchBody">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="inputField">Working field</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="inputField"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="inputGrade">Education grade</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="inputGrade"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="inputProvince">Province of residency</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="inputProvince"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="inputAgeGroup">Age group</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="inputAgeGroup"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Gender</label>
+                                    <div class="col-sm-8" id="inputGenders"></div>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <div class="col-sm-12 text-center">
+                                        <button type="submit" class="btn btn-primary" data-loading-text="Fetching the results...">
+                                            Go Score That
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<div class="container body-content">
+
+    
 
     <br />
 
@@ -101,9 +104,32 @@
         </div>
     </section>
 
+    <!-- modal box for errors -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="errorModalLabel">Something wrong happened</h4>
+                </div>
+                <div class="modal-body">
+                    <p>An unexpected error happened and prevents us from running this service.</p>
+                    <p>We are sorry for this inconvenience.</p>
+                    <p>Please try again at a later time :)</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
+
+    // provinces are global to this page
+    var provinces = undefined;
 
     // do things when document is ready
     $(function () {
@@ -113,7 +139,7 @@
 
             var fields = data.fields;
             var grades = data.grades;
-            var provinces = data.provinces;
+            provinces = data.provinces;
             var ages = data.ages;
             var genders = data.sex;
 
@@ -156,7 +182,9 @@
             $("#sectionSearch").collapse('show');
 
         }).fail(function () {
-            alert("oops"); //todo
+ 
+            $("#errorModal").modal('show');
+
         });
 
     });
@@ -170,11 +198,14 @@
         // set loading flag on button
         var $btn = $("form button").button('loading');
 
+        // get province id
+        var provinceId = $("select#inputProvince option:selected").val();
+
         // send async request to django
         var url = "/doSearch/" +
                     $("select#inputField option:selected").val() + "/" +
                     $("select#inputGrade option:selected").val() + "/" +
-                    $("select#inputProvince option:selected").val() + "/" +
+                    provinceId + "/" +
                     $("select#inputAgeGroup option:selected").val() + "/" +
                     $("input:radio[name=radioGender]:checked").val();
 
@@ -183,7 +214,21 @@
 
             var items = [];
             $.each(data, function (key, value) {
-                items.push("<dt>" + key + "</dt><dd>" + value + "</dd>");
+                
+                var sProgressClass = "progress-bar-success";
+                if (key == provinceId) {
+                    sProgressClass = "progress-bar-warning";
+                }
+
+                var sItem = "<dt>" + provinces[key] + "</dt>" +
+                            "<dd>" +
+                                "<div class='progress'>" +
+                                    "<div class='progress-bar " + sProgressClass + "' role='progressbar' style='width:" + value + "%'>" +
+                                        value + "%" +
+                                    "</div>" +
+                                "</div>" +
+                            "</dd>";
+                items.push(sItem);
             });
 
             $("<dl/>", {
@@ -201,7 +246,7 @@
 
         }).fail(function () {
 
-            alert("oops"); // todo
+            $("#errorModal").modal('show');
 
         }).always(function () {
 

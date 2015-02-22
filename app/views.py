@@ -81,11 +81,9 @@ def search(request, fieldID, gradeID, provID, ageID, genderID):
     # given inputs in parameters
 
     results = dict()
-    results['fieldID'] = fieldID
-    results['gradeID'] = gradeID
-    results['provID'] = provID
-    results['ageID'] = ageID
-    results['genderID'] = genderID
+    results[0] = 100
+    results[1] = 90
+    results[11] = 80
 
     return JsonResponse(results)
 

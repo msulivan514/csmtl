@@ -52,8 +52,16 @@ header {
     text-decoration: underline;
 }
 
-.progress-bar {
+#progressLoading {
     background-color: rgba(51, 51, 51, 1);
+}
+
+.progress-bar-success {
+    background-color: rgba(50, 131, 184, 1);
+}
+
+.progress-bar-warning {
+    background-color: rgba(235, 102, 30, 1);
 }
 
 .panel-primary, .panel-success {
