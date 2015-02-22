@@ -18,16 +18,16 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'CsMtlDB',
-#        'USER': 'b3a5fa3ab4fbbe',
-#        'PASSWORD': '45e96810',
-#        'HOST': 'us-cdbr-azure-east-b.cloudapp.net',
-#        'PORT': '',
-#    }
-#}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'CsMtlDB',
+        'USER': 'b3a5fa3ab4fbbe',
+        'PASSWORD': '45e96810',
+        'HOST': 'us-cdbr-azure-east-b.cloudapp.net',
+        'PORT': '',
+    }
+}
 
 LOGIN_URL = '/login'
 
