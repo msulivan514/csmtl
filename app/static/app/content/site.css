@@ -38,3 +38,12 @@ header {
     margin: 15px;
     padding: 30px;
 }
+
+.navbar-brand kbd:hover {
+    background-color: rgba(208, 54, 54, 1);
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: rgba(208, 54, 54, 1);
+    background-color: transparent;
+}
