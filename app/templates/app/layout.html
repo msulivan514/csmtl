@@ -24,7 +24,7 @@
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -44,13 +44,15 @@
         </div>
     </div>
 
-    <div class="container body-content">
-        {% block content %}{% endblock %}
-        <hr/>
-        <footer class="text-right">
+    {% block content %}{% endblock %}
+
+    <hr/>
+
+    <footer class="text-right">
+        <div class="container">
             <p>&copy; {{ year }} | <kbd>#csMTL</kbd> | The C0d3 Slingers from Montreal</p>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
 </body>
 </html>

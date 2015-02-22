@@ -35,15 +35,61 @@ input[type="checkbox"].input-validation-error {
 }
 
 header {
-    margin: 15px;
-    padding: 30px;
+    margin: 0;
+    padding: 45px;
+    background-color: rgba(208, 54, 54, 1);
+    background-image: linear-gradient(to bottom, rgba(168, 41, 41, 1) 0, rgba(208, 54, 54, 1) 100%);
+    background-repeat: repeat-x;
+    color: white;
 }
 
 .navbar-brand kbd:hover {
     background-color: rgba(208, 54, 54, 1);
 }
 
-.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+.navbar .navbar-nav > li > a, .navbar {
+    color: #333333;
+}
+
+.navbar .navbar-nav > li > a:hover, .navbar .navbar-nav > li > a:focus {
     color: rgba(208, 54, 54, 1);
     background-color: transparent;
+    text-decoration: underline;
+}
+
+.progress-bar {
+    background-color: rgba(51, 51, 51, 1);
+}
+
+.panel-primary, .panel-success {
+    border-color: rgba(51, 51, 51, 1);
+}
+
+.panel-primary > .panel-heading {
+    color: #ffffff;
+    background-color: rgba(51, 51, 51, 1);
+    border-color: rgba(51, 51, 51, 1);
+}
+
+.panel-success > .panel-heading {
+    color: #ffffff;
+    background-color: rgba(119, 119, 119, 1);
+    border-color: rgba(119, 119, 119, 1);
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: rgba(51, 51, 51, 1);
+    border-color: black;
+}
+
+.btn-primary:hover, .btn-primary:focus, .focus.btn-primary, .btn-primary:active, .active.btn-primary, .open > .btn-primary.dropdown-toggle {
+    color: #ffffff;
+    background-color: rgba(208, 54, 54, 1);
+    border-color: rgba(168, 41, 41, 1);
+}
+
+.disabled.btn-primary, [disabled].btn-primary, fieldset[disabled] .btn-primary, .disabled.btn-primary:hover, [disabled].btn-primary:hover, fieldset[disabled] .btn-primary:hover, .disabled.btn-primary:focus, [disabled].btn-primary:focus, fieldset[disabled] .btn-primary:focus, .focus.disabled.btn-primary, [disabled].focus.btn-primary, fieldset[disabled] .focus.btn-primary, .disabled.btn-primary:active, [disabled].btn-primary:active, fieldset[disabled] .btn-primary:active, .active.disabled.btn-primary, [disabled].active.btn-primary, fieldset[disabled] .active.btn-primary {
+    background-color: rgba(208, 54, 54, 0.6);
+    border-color: rgba(168, 41, 41, 1);
 }
