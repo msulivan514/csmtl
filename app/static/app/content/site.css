@@ -47,13 +47,8 @@ header {
     background-color: rgba(208, 54, 54, 1);
 }
 
-.navbar .navbar-nav > li > a, .navbar {
-    color: #333333;
-}
-
 .navbar .navbar-nav > li > a:hover, .navbar .navbar-nav > li > a:focus {
-    color: rgba(208, 54, 54, 1);
-    background-color: transparent;
+    background-color: rgba(208, 54, 54, 1);
     text-decoration: underline;
 }
 
