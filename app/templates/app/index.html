@@ -5,7 +5,7 @@
 <header>
     <div class="row">
         <div class="col-sm-12 text-center">
-            <h1><strong>Welcome to blablabla</strong></h1>
+            <h1><strong>Welcome to <kbd>#csMTL</kbd></strong></h1>
             <h3>This webapp makes it possible to do ploploploplop...</h3>
             <h4>Simply make your selection and hit <mark>Go</mark> to get results</h4>
         </div>
@@ -14,52 +14,59 @@
 
 <br />
 
+
 <section>
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-            <div class="well well-lg">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" for="inputField">Working field</label>
-                    <div class="col-sm-8">
-                        <select class="form-control" id="inputField"></select>
-                    </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Select your profile</h3>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" for="inputGrade">Education grade</label>
-                    <div class="col-sm-8">
-                        <select class="form-control" id="inputGrade"></select>
-                    </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="inputField">Working field</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="inputField"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="inputGrade">Education grade</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="inputGrade"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="inputProvince">Province of residency</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="inputProvince"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="inputAgeGroup">Age group</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="inputAgeGroup"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Gender</label>
+                            <div class="col-sm-8" id="inputGenders"></div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <div class="col-sm-12 text-center">
+                                <button type="submit" class="btn btn-primary" data-loading-text="Fetching the results...">
+                                    Go Score That
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" for="inputProvince">Province of residency</label>
-                    <div class="col-sm-8">
-                        <select class="form-control" id="inputProvince"></select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" for="inputAgeGroup">Age group</label>
-                    <div class="col-sm-8">
-                        <select class="form-control" id="inputAgeGroup"></select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Gender</label>
-                    <div class="col-sm-8" id="inputGenders"></div>
-                </div>
-                <hr />
-                <div class="form-group">
-                    <div class="col-sm-12 text-center">
-                        <button type="submit" class="btn btn-primary" data-loading-text="Fetching the results...">
-                            Go Score That
-                        </button>
-                    </div>
-                </div>
-            </form>
             </div>
         </div>
     </div>
 </section>
+
 
 <br />
 
