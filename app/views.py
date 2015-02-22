@@ -7,6 +7,7 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.template import RequestContext
 from datetime import datetime
 from app.models import AgeGroup, Sex, EducationLevel
+from app.models import WorkField, Province, UnemploymentToVacanciesRatio
 
 #----------------------------------------------------------------
 def home(request):
@@ -44,25 +45,28 @@ def _GetAgeGroupAll():
    return ret
 
 #----------------------------------------------------------------
+def _GetWorkFieldAll():
+   ret = dict()
+   for workField in WorkField.objects.all():
+      ret[workField.id] = workField.name
+   return ret 
+
+#----------------------------------------------------------------
+def _GetProvincesAll():
+   ret = dict()
+   for province in Province.objects.all():
+      ret[province.id] = province.name
+   return ret 
+
+#----------------------------------------------------------------
 def filters(request):
     """Builds Json file with search filters"""
     assert isinstance(request, HttpRequest)
 
     filters = dict()
-
-    fields = dict()
-    fields[0] = "field1"
-    fields[1] = "field2"
-    fields[2] = "field3"
-
-    provinces = dict()
-    provinces[0] = "province1"
-    provinces[1] = "province2"
-    provinces[2] = "province3"
-
-    filters["fields"] = fields
+    filters["fields"] = _GetWorkFieldAll() 
     filters["grades"] = _GetEducLevelsAll()
-    filters["provinces"] = provinces
+    filters["provinces"] = _GetProvincesAll() 
     filters["ages"] = _GetAgeGroupAll()
     filters["sex"] = _GetSexAll()
     
