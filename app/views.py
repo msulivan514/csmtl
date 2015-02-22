@@ -128,19 +128,23 @@ def getProvinceChance(fieldID, gradeID, provID, ageID, genderID):
         return None
 
 #----------------------------------------------------------------
-def search(request, fieldID, gradeID, ageID, genderID):
+def search(request, fieldID, gradeID, ageID):
     """Crunches the whole data with inputs from the user and return json as a result"""
     assert isinstance(request, HttpRequest)
 
     results = dict()
 
     provinces = _GetProvincesAll()
+    genders = _GetSexAll()
 
     for provId in provinces.keys():
-        chance = getProvinceChance(fieldID, gradeID, provId, ageID, genderID)
-        if(chance == None):
-            continue
-        results[provId] = chance;
+        byGenders = dict()
+        for genderId in genders.keys():
+            chance = getProvinceChance(fieldID, gradeID, provId, ageID, genderId)
+            if(chance == None):
+                continue
+            byGenders[genderId] = chance
+            results[provId] = byGenders;
 
     return JsonResponse(results)
 

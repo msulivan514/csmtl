@@ -61,10 +61,6 @@
                                         <select class="form-control" id="inputAgeGroup"></select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Gender</label>
-                                    <div class="col-sm-8" id="inputGenders"></div>
-                                </div>
                                 <hr />
                                 <div class="form-group">
                                     <div class="col-sm-12 text-center">
@@ -94,7 +90,17 @@
                             <h3 class="panel-title"><span class="glyphicon glyphicon-triangle-bottom"></span> Here are our results</h3>
                         </div>
                         <div class="panel-body">
-                            <div id="results"></div>
+                            <div id="results">
+                                <div class="col-sm-offset-8 col-sm-4">
+                                    <div class="progress">
+                                    <div class="progress-bar progress-bar-success" style="width: 50%">
+                                        men
+                                    </div>
+                                    <div class="progress-bar progress-bar-warning" style="width: 50%">
+                                        women
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -127,6 +133,7 @@
 <script>
 
     var provinces;
+    var genders;
 
     // do things when document is ready
     $(function () {
@@ -138,7 +145,7 @@
             var grades = data.grades;
             provinces = data.provinces;
             var ages = data.ages;
-            var genders = data.sex;
+            genders = data.sex;
 
             $.each(fields, function (key, value) {
                 var sOption = "<option value=" + key + ">" + value + "</option>";
@@ -154,16 +161,6 @@
                 var sOption = "<option value=" + key + ">" + value + "</option>";
                 $("#inputAgeGroup").append(sOption);
             });
-
-            $.each(genders, function (key, value) {
-                var sOption =
-                            "<label class='radio-inline'>" +
-                                "<input type='radio' name='radioGender' value='" + key + "'>" + value +
-                            "</label>";
-                $("#inputGenders").append(sOption);
-            });
-
-            $("input:radio[name=radioGender]").attr("checked", "checked");
 
         }).done(function () {
 
@@ -194,24 +191,38 @@
         var url = "/doSearch/" +
                     $("select#inputField option:selected").val() + "/" +
                     $("select#inputGrade option:selected").val() + "/" +
-                    $("select#inputAgeGroup option:selected").val() + "/" +
-                    $("input:radio[name=radioGender]:checked").val();
+                    $("select#inputAgeGroup option:selected").val();
 
                     
         $.getJSON(url, function (data) {
 
             var items = [];
-            $.each(data, function (key, value) {
+            $.each(data, function (provId, chancesByGender) {
 
-                var chance = Math.round(value);
-                var sItem = "<dt>" + provinces[key] + "</dt>" +
-                            "<dd>" +
-                                "<div class='progress'>" +
-                                    "<div class='progress-bar progress-bar-success' role='progressbar' style='width:" + chance + "%'>" +
-                                        chance + "%" +
+                var sItem = "<dt>" + provinces[provId] + "</dt>";
+
+                $.each(genders, function (genderId, genderName) {
+
+                    var chance = chancesByGender[genderId];
+                    chance = Math.round(chance);
+
+                    var sProgressClass = "progress-bar-success";
+                    if (genderId == 11) {
+                        sProgressClass = "progress-bar-warning";
+                    }
+                    
+
+                    sItem = sItem +
+                                "<dd>" +
+                                    "<div class='progress'>" +
+                                        "<div class='progress-bar " + sProgressClass + "' role='progressbar' style='width:" + chance + "%'>" +
+                                            chance + "%" +
+                                        "</div>" +
                                     "</div>" +
-                                "</div>" +
-                            "</dd>";
+                                "</dd>";
+                    
+                });
+
                 items.push(sItem);
             });
 
