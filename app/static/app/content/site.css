@@ -43,6 +43,11 @@ header {
     color: white;
 }
 
+section {
+    margin:0;
+    padding:15px;
+}
+
 .navbar-brand kbd:hover {
     background-color: rgba(208, 54, 54, 1);
 }
@@ -78,6 +83,15 @@ header {
     color: #ffffff;
     background-color: rgba(119, 119, 119, 1);
     border-color: rgba(119, 119, 119, 1);
+}
+
+.panel-primary > .panel-heading > a {
+    color: white;
+    text-decoration: none;
+}
+
+.panel-primary > .panel-heading > a:hover {
+    text-decoration: underline;
 }
 
 .btn-primary {
