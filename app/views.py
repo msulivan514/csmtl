@@ -80,11 +80,84 @@ def search(request, fieldID, gradeID, provID, ageID, genderID):
     # add code to compute fitness functions f1 and f2
     # given inputs in parameters
 
-    results = dict()
-    results[0] = 100
-    results[1] = 90
-    results[11] = 80
+    #results = dict()
+    #results['fieldID'] = fieldID
+    #results['gradeID'] = gradeID
+    #results['provID'] = provID
+    #results['ageID'] = ageID
+    #results['genderID'] = genderID
 
+    #return JsonResponse(results)
+
+    """the final score is F=aF1+(1-a)F2"""
+
+    """Calcul du score F1 en %"""
+    #genderID='Female'
+    #ageID='15 to 24 years'
+    #provID='Alberta'
+    #fieldID='Construction'
+    #gradeID='High school graduate'
+    score_1=dict()
+    print('%s, %s, %s,%s,%s',genderID, provID, ageID,fieldID,gradeID)
+    F1=EmploymentRatio.objects.values_list('value',flat=True).filter(sex__id=genderID).filter(educLevel__id=gradeID).get(ageGroup__id=ageID)
+       
+    score_1['success']=F1
+    print('%f',F1)
+
+    """Calcul du score F2 en %"""
+    """unemp est le taux d unemployment"""
+
+    print "workfiel id %s, province id %s" %(fieldID, provID)
+    score_2=dict()
+    try:
+        unemp = UnemploymentToVacanciesRatio.objects.filter( workField__id=fieldID, province__id=provID )
+ #       unemp=UnemploymentToVacanciesRatio.objects.values_list('value',flat=True).filter(workField__id=fieldID).get(province__id=provID)
+    except:
+       print "unemp not found"
+       unemp=None
+
+    """gestion exception lorsque pas de data depuis dataset JVS incomplete"""
+    """qualite_2 est la qualite de mesure, sous forme literale"""
+    if (not unemp):
+       cont=dict()
+       print "unemp not found"
+       cont['results']=F1
+       return JsonResponse(cont)
+    else:
+           print('%f',unemp)
+           temp=DataQuality.objects.get(workfield__name=fieldID)
+           qualite_2=temp.name
+    """F2 est la traduction en % de unemp. si unemp = 0, F2=100%, si unemp>=1, F2=0%"""
+    """attention: eliminer data ou unemp n'existe pas  """
+    if(unemp >=0 or unemp <=1):
+          F2=100*(1-unemp)
+          print('%f',F2)
+    else:
+          F2=0
+    """Q2 est la ponderation de Qualite_2, ex: A=1, F=0.1"""
+
+    if (qualite_2=='A'):
+          Q2=1
+    if (qualite_2=='B'):
+          Q2=0.8
+    if (qualite_2=='C'):
+          Q2=0.6
+    if (qualite_2=='D'):
+          Q2=0.4
+    if (qualite_2=='E'):
+          Q2=0.2
+    if (qualite_2=='F'):
+          Q2=0.1
+
+    score_2['success']=F2
+    score_2['qualite']=Q2
+#    return JsonResponse(score_2)
+
+    """Retourne la valeur de F"""
+    a=1-Q2
+    b=Q2
+    print('%f,%f',a,b)
+    results=dict()
     return JsonResponse(results)
 
 #----------------------------------------------------------------
