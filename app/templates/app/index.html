@@ -12,9 +12,11 @@
     </div>
 </header>
 
-<!-- section for search filters -->
-<section style="background-color: lightslategray;">
-    <div class="container body-content">
+<div class="container body-content">
+
+    <!-- section for search filters -->
+    <section>
+    
         <!-- progress bar to indicate loading of search filters -->
         <div class="row collapse in" id="progress">
             <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8">
@@ -83,12 +85,11 @@
                 </div>
             </div>
         </section>
-    </div>
-</section>
 
-<!-- section for results -->
-<section>
-    <div class="container body-content">
+    </section>
+
+    <!-- section for results -->
+    <section>
 
         <!-- the results panel -->
         <section class="collapse" id="sectionResults">
@@ -106,8 +107,8 @@
             </div>
         </section>
 
-    </div>
-</section>
+    </section>
+</div>
 
 <!-- modal box for errors -->
 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
@@ -233,6 +234,8 @@
                             "</dd>";
                 items.push(sItem);
             });
+
+            $("#results dl").remove();
 
             $("<dl/>", {
                 "class": "dl-horizontal",
